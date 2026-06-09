@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import BaseTable from '../../components/BaseTable'
-import mockMemberData from '../../components/mock/member.json'
 import type { MemberType } from '../../types/member'
+import { getMembers } from '../../services/member'
 
 export default function MemberPage() {
     const handleEdit = (row: MemberType) => {
@@ -11,6 +12,12 @@ export default function MemberPage() {
         console.log('Delete id:', row.id);
     };
 
+    const { data: members, isLoading: isMembersLoading } = useQuery({
+        queryKey: ['members'],
+        queryFn: getMembers,
+        gcTime: 50000,
+    })
+
     return (
         <div style={{
             display: 'flex',
@@ -18,12 +25,15 @@ export default function MemberPage() {
             alignItems: 'center',
         }}>
             Member Page
-            <BaseTable 
-                data={mockMemberData} 
-                idKey="id"
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-            />
+            {isMembersLoading && <p>Loading...</p>}
+            {members &&(
+                <BaseTable 
+                    data={members} 
+                    idKey="id"
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                />
+            )}
         </div>
     )
 }
