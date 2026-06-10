@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { MEMBERS_KEY } from '../services/member'
 import type { Member } from '../types/member'
 
-export function useMemberMutations() {
+export function useMemberCacheActions() {
   const queryClient = useQueryClient()
 
   const add = (member: Omit<Member, 'id'>) => {
