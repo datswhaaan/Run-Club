@@ -5,7 +5,9 @@
     "email": "arthit.wongchai@example.com",
     "gender": "Male",
     "age": 24,
-    "pace": "5:10"
+    "pace": "5:10",
+    "paceMin": "5",
+    "paceSec": "10"
   },
   {
     "id": 2,
@@ -13,7 +15,10 @@
     "email": "nattaya.k@example.com",
     "gender": "Female",
     "age": 27,
-    "pace": "6:05"
+    "pace": "6:05",
+
+    "paceMin": "6",
+    "paceSec": "05"
   },
   {
     "id": 3,
@@ -21,7 +26,9 @@
     "email": "kritsada.s@example.com",
     "gender": "Male",
     "age": 31,
-    "pace": "4:45"
+    "pace": "4:45",
+    "paceMin": "4",
+    "paceSec": "45"
   },
   {
     "id": 4,
@@ -29,7 +36,9 @@
     "email": "ployphailin.r@example.com",
     "gender": "Female",
     "age": 22,
-    "pace": "5:50"
+    "pace": "5:50",
+    "paceMin": "5",
+    "paceSec": "50"
   },
   {
     "id": 5,
@@ -37,7 +46,9 @@
     "email": "chanon.l@example.com",
     "gender": "Male",
     "age": 29,
-    "pace": "5:30"
+    "pace": "5:30",
+    "paceMin": "5",
+    "paceSec": "30"
   },
   {
     "id": 6,
@@ -45,7 +56,9 @@
     "email": "sirinapa.c@example.com",
     "gender": "Female",
     "age": 26,
-    "pace": "6:20"
+    "pace": "6:20",
+    "paceMin": "6",
+    "paceSec": "20"
   },
   {
     "id": 7,
@@ -53,7 +66,9 @@
     "email": "teerapat.j@example.com",
     "gender": "Male",
     "age": 34,
-    "pace": "4:55"
+    "pace": "4:55",
+    "paceMin": "4",
+    "paceSec": "55"
   },
   {
     "id": 8,
@@ -61,6 +76,8 @@
     "email": "waranya.k@example.com",
     "gender": "Female",
     "age": 28,
-    "pace": "5:40"
+    "pace": "5:40",
+    "paceMin": "5",
+    "paceSec": "40"
   }
 ]

@@ -3,7 +3,7 @@ import { useMemberCacheActions } from '../hooks/useMemberCacheActions'
 import { useEditModal } from '../hooks/useEditModal'
 import { EditMemberModal } from './EditMemberModal'
 import BaseTable from './BaseTable'
-import type { Member } from '../types/member'
+import type { Member} from '../types/member'
 
 export function MemberList() {
   const { data: members = [], isLoading } = useMembers()
@@ -17,6 +17,7 @@ export function MemberList() {
       <BaseTable<Member, 'id'>
         data={members}
         idKey="id"
+        hiddenKeys={["paceMin", "paceSec"]}
         onEdit={modal.open}
         onDelete={(id) => remove(id)}
       />

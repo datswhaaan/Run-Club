@@ -5,4 +5,6 @@ export type Member = {
     "gender": string;
     "age": number;
     "pace": string;
+    "paceMin": number;
+    "paceSec": number;
 }
