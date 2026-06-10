@@ -1,7 +1,9 @@
-import Member from '../components/mock/member.json'
+import Members from '../components/mock/member.json'
+import type { Member } from '../types/member'
 
-export async function getMembers() {
-  await new Promise(resolve => setTimeout(resolve, 500))
 
-  return Member
+export const MEMBERS_KEY = ['runclub', 'members'] as const
+
+export async function getMembers(): Promise<Member[]> {
+  return Members
 }

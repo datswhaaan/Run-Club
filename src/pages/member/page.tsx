@@ -1,27 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import BaseTable from '../../components/BaseTable'
-import type { MemberType } from '../../types/member'
-import { getMembers } from '../../services/member'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router'
+import { MemberList } from '../../components/MemberList';
 
 export default function MemberPage() {
     const navigate = useNavigate();
-    
-    const handleEdit = (row: MemberType) => {
-        console.log('Edit:', row);
-    };
-
-    const handleDelete = (row: MemberType) => {
-        console.log('Delete id:', row.id);
-    };
-
-    const { data: members, isLoading: isMembersLoading } = useQuery({
-        queryKey: ['members'],
-        queryFn: getMembers,
-        gcTime: 50000,
-    })
 
     return (
         <Box sx={{
@@ -49,15 +32,7 @@ export default function MemberPage() {
                     Register
                 </Button>
             </Box>
-            {isMembersLoading && <p>Loading...</p>}
-            {members &&(
-                <BaseTable 
-                    data={members} 
-                    idKey="id"
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                    />
-            )}
+            <MemberList />
         </Box>
     )
 }

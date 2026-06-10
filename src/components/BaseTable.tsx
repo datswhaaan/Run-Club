@@ -29,23 +29,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-interface BaseTableProps<T extends Record<string, unknown>> {
+interface BaseTableProps<T extends Record<string, unknown>, IdKey extends keyof T = keyof T> {
   data: T[];
-  idKey?: keyof T;
+  idKey?: IdKey;
   hiddenKeys?: (keyof T)[];
   columnLabels?: Partial<Record<keyof T, string>>;
   onEdit?: (row: T) => void;
-  onDelete?: (row: T) => void;
+  onDelete?: (id: T[IdKey]) => void;
 }
 
-export default function BaseTable<T extends Record<string, unknown>>({
+export default function BaseTable<T extends Record<string, unknown>, IdKey extends keyof T = keyof T>({
   data,
-  idKey = 'id' as keyof T,
+  idKey = 'id' as IdKey,
   hiddenKeys = [],
   columnLabels,
   onEdit,
   onDelete,
-}: BaseTableProps<T>) {
+}: BaseTableProps<T, IdKey>) {
   const excludedKeys = new Set([idKey, ...hiddenKeys]);
   
   const columns = data.length > 0
@@ -93,7 +93,7 @@ export default function BaseTable<T extends Record<string, unknown>>({
                     </IconButton>
                   )}
                   {onDelete && (
-                    <IconButton color="error" aria-label="delete" onClick={() => onDelete(row)}>
+                    <IconButton color="error" aria-label="delete" onClick={() => onDelete(row[idKey])}>
                       <DeleteIcon />
                     </IconButton>
                   )}

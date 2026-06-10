@@ -1,4 +1,4 @@
-export type MemberType = {
+export type Member = {
     "id": number;
     "name": string;
     "email": string;
