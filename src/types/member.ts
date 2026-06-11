@@ -8,3 +8,5 @@ export type Member = {
     "paceMin": number;
     "paceSec": number;
 }
+
+export type MemberFormValues = Omit<Member, 'id' | 'pace'>

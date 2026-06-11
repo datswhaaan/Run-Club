@@ -1,5 +1,5 @@
 import type { Member } from '../types/member'
-import { Dialog } from '@mui/material'
+import { Dialog, DialogTitle } from '@mui/material'
 import MemberInfoForm from './MemberInfoForm'
 
 interface Props {
@@ -19,6 +19,8 @@ export function EditMemberModal({ member, onSave, onClose }: Props) {
 
     return (
         <Dialog open onClose={onClose} fullWidth maxWidth="xs">
+            <DialogTitle>Edit Member Information</DialogTitle>
+
             <MemberInfoForm 
                 member={member}
                 handleSubmit={handleSubmit}

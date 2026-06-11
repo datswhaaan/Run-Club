@@ -1,14 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { MEMBERS_KEY } from '../services/member'
-import type { Member } from '../types/member'
+import type { Member, MemberFormValues } from '../types/member'
 
 export function useMemberCacheActions() {
   const queryClient = useQueryClient()
 
-  const add = (member: Omit<Member, 'id'>) => {
+  const add = (member: MemberFormValues) => {
     queryClient.setQueryData<Member[]>(MEMBERS_KEY, (old = []) => [
       ...old,
-      { ...member, id: Date.now() },
+      { ...member, 
+        id: Date.now(), 
+        pace: String(member.paceMin) + ":" + String(member.paceSec).padStart(2, '0')
+      },
     ])
   }
 

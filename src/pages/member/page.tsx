@@ -24,8 +24,7 @@ export default function MemberPage() {
                     variant="contained"
                     onClick={() => navigate('/register')}
                     sx={{
-                        borderRadius: 10, 
-                        fontWeight: 'bold',
+                        borderRadius: 10,
                         height: 30
                     }}
                 >

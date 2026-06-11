@@ -1,17 +1,26 @@
 import { Form, Field } from 'react-final-form'
 import {
-    DialogTitle, DialogContent, DialogActions,
+    DialogContent, DialogActions,
     TextField, Button, Box, 
     FormControl, FormLabel, FormControlLabel, 
     RadioGroup, Radio, FormHelperText
 } from '@mui/material'
 import NumberField from './NumberField';
-import type { Member } from '../types/member'
+import type { Member, MemberFormValues } from '../types/member'
 
 interface Props {
-    member: Member,
-    handleSubmit: (values: Partial<Member>) => void,
+    member?: Member,
+    handleSubmit: (values: MemberFormValues) => void,
     handleCancel: () => void
+}
+
+const defaultValues: MemberFormValues = {
+  name: '',
+  email: '',
+  gender: 'Male',
+  age: 0,
+  paceMin: 5,
+  paceSec: 0
 }
 
 // validators
@@ -35,14 +44,16 @@ export default function MemberInfoForm({
     handleSubmit,
     handleCancel
 } : Props) {
+    const initialValues: MemberFormValues = member
+        ? { name: member.name, email: member.email, gender: member.gender,
+            age: member.age, paceMin: member.paceMin, paceSec: member.paceSec}
+        : defaultValues
     return (
         <Form
-            initialValues={{ name: member.name, email: member.email, gender: member.gender, age: member.age, paceMin: member.paceMin, paceSec: member.paceSec}}
+            initialValues={initialValues}
             onSubmit={handleSubmit}
             render={({ handleSubmit, submitting, pristine }) => (
                 <form onSubmit={handleSubmit}>
-
-                    <DialogTitle>Edit Member Information</DialogTitle>
 
                     <DialogContent>
                         <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, pt: 2}}>
@@ -86,15 +97,17 @@ export default function MemberInfoForm({
                             <Field name="gender" validate={required}>
                                 {({ input, meta }) => (
                                     <FormControl error={meta.touched && !!meta.error}>
-                                        <FormLabel>Gender</FormLabel>
-                                        <RadioGroup {...input} row>
-                                            <FormControlLabel value="Male"   control={<Radio />} label="Male" />
-                                            <FormControlLabel value="Female" control={<Radio />} label="Female" />
-                                            <FormControlLabel value="Other"  control={<Radio />} label="Other" />
-                                        </RadioGroup>
-                                        {meta.touched && meta.error && (
-                                            <FormHelperText>{meta.error}</FormHelperText>
-                                        )}
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
+                                            <FormLabel>Gender</FormLabel>
+                                            <RadioGroup {...input} row>
+                                                <FormControlLabel value="Male"   control={<Radio />} label="Male" />
+                                                <FormControlLabel value="Female" control={<Radio />} label="Female" />
+                                                <FormControlLabel value="Other"  control={<Radio />} label="Other" />
+                                            </RadioGroup>
+                                            {meta.touched && meta.error && (
+                                                <FormHelperText>{meta.error}</FormHelperText>
+                                            )}
+                                        </Box>
                                     </FormControl>
                                 )}
                             </Field>

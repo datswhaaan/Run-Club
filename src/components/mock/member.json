@@ -6,8 +6,8 @@
     "gender": "Male",
     "age": 24,
     "pace": "5:10",
-    "paceMin": "5",
-    "paceSec": "10"
+    "paceMin": 5,
+    "paceSec": 10
   },
   {
     "id": 2,
@@ -17,8 +17,8 @@
     "age": 27,
     "pace": "6:05",
 
-    "paceMin": "6",
-    "paceSec": "05"
+    "paceMin": 6,
+    "paceSec": 5
   },
   {
     "id": 3,
@@ -27,8 +27,8 @@
     "gender": "Male",
     "age": 31,
     "pace": "4:45",
-    "paceMin": "4",
-    "paceSec": "45"
+    "paceMin": 4,
+    "paceSec": 45
   },
   {
     "id": 4,
@@ -37,8 +37,8 @@
     "gender": "Female",
     "age": 22,
     "pace": "5:50",
-    "paceMin": "5",
-    "paceSec": "50"
+    "paceMin": 5,
+    "paceSec": 50
   },
   {
     "id": 5,
@@ -47,8 +47,8 @@
     "gender": "Male",
     "age": 29,
     "pace": "5:30",
-    "paceMin": "5",
-    "paceSec": "30"
+    "paceMin": 5,
+    "paceSec": 30
   },
   {
     "id": 6,
@@ -57,8 +57,8 @@
     "gender": "Female",
     "age": 26,
     "pace": "6:20",
-    "paceMin": "6",
-    "paceSec": "20"
+    "paceMin": 6,
+    "paceSec": 20
   },
   {
     "id": 7,
@@ -67,8 +67,8 @@
     "gender": "Male",
     "age": 34,
     "pace": "4:55",
-    "paceMin": "4",
-    "paceSec": "55"
+    "paceMin": 4,
+    "paceSec": 55
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "gender": "Female",
     "age": 28,
     "pace": "5:40",
-    "paceMin": "5",
-    "paceSec": "40"
+    "paceMin": 5,
+    "paceSec": 40
   }
 ]
