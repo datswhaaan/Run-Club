@@ -25,7 +25,7 @@ export function MemberList() {
       {modal.isOpen && modal.editingRow && (
         <EditMemberModal
           member={modal.editingRow}
-          onSave={(changes) => update(modal.editingRow!.id, changes)}
+          onSave={(changes) => update({id: modal.editingRow!.id, changes: changes})}
           onClose={modal.close}
         />
       )}
