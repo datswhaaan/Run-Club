@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router'
-import RegisterPage from './pages/register/page'
-import MemberPage from './pages/member/page'
+import RegisterPage from './pages/register'
+import MemberPage from './pages/member'
 import MainLayout from './layouts/MainLayout'
 
 function App() {

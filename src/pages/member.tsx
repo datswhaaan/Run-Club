@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router'
-import { MemberList } from '../../components/MemberList';
+import { MemberList } from '../components/MemberList';
 
 export default function MemberPage() {
     const navigate = useNavigate();

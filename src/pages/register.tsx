@@ -1,6 +1,6 @@
 import { Box } from "@mui/material"
-import RegisterMemberForm from "../../components/RegisterMemberForm"
-import { useMemberCacheActions } from "../../hooks/useMemberCacheActions"
+import RegisterMemberForm from "../components/RegisterMemberForm"
+import { useMemberCacheActions } from "../hooks/useMemberCacheActions"
 import { useNavigate } from "react-router"
 
 export default function RegisterPage() {
