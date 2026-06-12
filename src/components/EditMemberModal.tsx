@@ -10,10 +10,7 @@ interface Props {
 
 export function EditMemberModal({ member, onSave, onClose }: Props) {
     const handleSubmit = (values: Partial<Member>) => {
-        onSave({
-            ...values,
-            pace: String(values.paceMin) + ":" + String(values.paceSec),
-        })
+        onSave(values)
         onClose()
     }
 

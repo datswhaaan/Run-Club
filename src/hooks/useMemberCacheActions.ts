@@ -20,22 +20,24 @@ export function useMemberCacheActions() {
   })
 
   const updateMutation = useMutation({
-    mutationFn: async ({
-      id,
-      changes,
-    }: {
-      id: number
-      changes: Partial<Member>
-    }) => ({
-      id,
-      changes,
-    }),
-    onSuccess: ({ id, changes }) => {
-      queryClient.setQueryData<Member[]>(MEMBERS_KEY, (old = []) =>
-        old.map((m) => (m.id === id ? { ...m, ...changes } : m))
-      )
+    mutationFn: async ({ id, changes }: { id: number; changes: Partial<Member> }) => {
+      const computedPace = `${changes.paceMin}:${String(changes.paceSec).padStart(2, '0')}`;
+
+      return {
+        id,
+        updatedData: {
+          ...changes,
+          pace: computedPace,
+        }
+      };
     },
-  })
+    
+    onSuccess: (data) => {
+      queryClient.setQueryData<Member[]>(MEMBERS_KEY, (old = []) =>
+        old.map((m) => (m.id === data.id ? { ...m, ...data.updatedData } : m))
+      );
+    },
+  });
 
   const removeMutation = useMutation({
     mutationFn: async (id: number) => id,
