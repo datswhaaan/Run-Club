@@ -24,8 +24,10 @@ const defaultValues: MemberFormValues = {
 }
 
 // validators
-const required = (value: any) =>
-    value ? undefined : 'Required'
+const required = (value: unknown) =>
+  value !== undefined && value !== '' && value !== null
+    ? undefined
+    : 'Required'
 
 const validEmail = (value: string) => {
     if (!value) return 'Required'
@@ -141,7 +143,7 @@ export default function MemberInfoForm({
                                                 min={0}
                                                 max={59}
                                                 value={input.value === '' ? undefined : Number(input.value)}
-                                                onValueChange={(value) => input.onChange(value ?? '')}
+                                                onValueChange={(value) => input.onChange(value !== null ? value : '')}
                                                 onBlur={input.onBlur}
                                                 onFocus={input.onFocus}
                                                 error={meta.touched && !!meta.error}
@@ -155,15 +157,15 @@ export default function MemberInfoForm({
                     </DialogContent>
 
                     <DialogActions>
-                    <Button onClick={handleCancel}>cancel</Button>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={submitting || pristine}
-                        sx={{borderRadius: 10, height: 40}}
-                    >
-                        submit
-                    </Button>
+                        <Button onClick={handleCancel}>cancel</Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={submitting || pristine}
+                            sx={{borderRadius: 10, height: 40}}
+                        >
+                            submit
+                        </Button>
                     </DialogActions>
 
                 </form>

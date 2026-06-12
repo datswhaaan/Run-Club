@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { ColumnConfig } from '../types/column';
-// import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -19,7 +18,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontWeight: 'bold',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14
+    fontSize: 14,
+    borderBottom: 'none',
   },
 }));
 
@@ -28,6 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
   },
+  height: 75,
 }));
 
 interface BaseTableProps<T extends Record<string, unknown>, IdKey extends keyof T = keyof T> {
@@ -36,6 +37,7 @@ interface BaseTableProps<T extends Record<string, unknown>, IdKey extends keyof 
   columns: ColumnConfig<T>[];
   onEdit?: (row: T) => void;
   onDelete?: (id: T[IdKey]) => void;
+  minRows?: number;
 }
 
 export default function BaseTable<T extends Record<string, unknown>, IdKey extends keyof T = keyof T>({
@@ -44,62 +46,80 @@ export default function BaseTable<T extends Record<string, unknown>, IdKey exten
   columns,
   onEdit,
   onDelete,
+  minRows = 6,
 }: BaseTableProps<T, IdKey>) {
+  const emptyRowCount = Math.max(0, minRows - data.length)
+  const colSpan = columns.length + (onEdit || onDelete ? 1 : 0)
+
   return (
     <TableContainer
       component={Paper}
-      sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 3}}
+      sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 3 }}
     >
-      <Table sx={{ tableLayout: 'fixed', minWidth: 650 }} aria-label="dynamic table" >
+      <Table sx={{ tableLayout: 'fixed', minWidth: 650 }} aria-label="dynamic table">
         <TableHead>
-          <StyledTableRow>
+          <TableRow>
             {columns.map((col) => (
-              <StyledTableCell 
-                key={String(col)}
-                width={col.width}
-              >
+              <StyledTableCell key={String(col.key)} width={col.width}>
                 {col.label}
               </StyledTableCell>
             ))}
-            {(onEdit || onDelete) && (
-              <StyledTableCell width={120} />
-            )}
-          </StyledTableRow>
+            {(onEdit || onDelete) && <StyledTableCell width={120} />}
+          </TableRow>
         </TableHead>
+
         <TableBody>
-          {data.map((row, i) => (
-            <StyledTableRow key={idKey ? String(row[idKey]) : i}>
-              {columns.map((col) => (
-                <StyledTableCell
-                  key={String(col.key)}
-                  sx={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {String(row[col.key] ?? '')}
-                </StyledTableCell>
-              ))}
-              {(onEdit || onDelete) && (
-                <StyledTableCell key="actions" align='right'>
-                  {onEdit && (
-                    <IconButton color="secondary" aria-label="edit" onClick={() => onEdit(row)}>
-                      <EditIcon />
-                    </IconButton>
-                  )}
-                  {onDelete && (
-                    <IconButton color="error" aria-label="delete" onClick={() => onDelete(row[idKey])}>
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </StyledTableCell>
-              )}
+          {data.length === 0 && emptyRowCount === 0 ? (
+            <StyledTableRow>
+              <StyledTableCell colSpan={colSpan} align="center" sx={{ color: 'text.secondary' }}>
+                ไม่มีข้อมูล
+              </StyledTableCell>
             </StyledTableRow>
-          ))}
+          ) : (
+            <>
+              {/* data rows */}
+              {data.map((row, i) => (
+                <StyledTableRow key={idKey ? String(row[idKey]) : i}>
+                  {columns.map((col) => (
+                    <StyledTableCell
+                      key={String(col.key)}
+                      sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                    >
+                      {String(row[col.key] ?? '')}
+                    </StyledTableCell>
+                  ))}
+                  {(onEdit || onDelete) && (
+                    <StyledTableCell align="right">
+                      {onEdit && (
+                        <IconButton color="secondary" aria-label="edit" onClick={() => onEdit(row)}>
+                          <EditIcon />
+                        </IconButton>
+                      )}
+                      {onDelete && (
+                        <IconButton color="error" aria-label="delete" onClick={() => onDelete(row[idKey])}>
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
+                    </StyledTableCell>
+                  )}
+                </StyledTableRow>
+              ))}
+
+              {Array.from({ length: emptyRowCount }).map((_, i) => (
+                <StyledTableRow key={`empty-${i}`}>
+                  {i === 0 && data.length === 0 ? (
+                    <StyledTableCell colSpan={colSpan} align="center" sx={{ color: 'text.secondary' }}>
+                      ไม่มีข้อมูล
+                    </StyledTableCell>
+                  ) : (
+                    <StyledTableCell colSpan={colSpan} />
+                  )}
+                </StyledTableRow>
+              ))}
+            </>
+          )}
         </TableBody>
       </Table>
-      {/* <Pagination count={10} color='primary'/> */}
     </TableContainer>
-  );
+  )
 }
