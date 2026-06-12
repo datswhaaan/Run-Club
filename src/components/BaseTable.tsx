@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import type { ColumnConfig } from '../types/column';
 // import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,8 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 interface BaseTableProps<T extends Record<string, unknown>, IdKey extends keyof T = keyof T> {
   data: T[];
   idKey?: IdKey;
-  hiddenKeys?: (keyof T)[];
-  columnLabels?: Partial<Record<keyof T, string>>;
+  columns: ColumnConfig<T>[];
   onEdit?: (row: T) => void;
   onDelete?: (id: T[IdKey]) => void;
 }
@@ -41,52 +41,48 @@ interface BaseTableProps<T extends Record<string, unknown>, IdKey extends keyof 
 export default function BaseTable<T extends Record<string, unknown>, IdKey extends keyof T = keyof T>({
   data,
   idKey = 'id' as IdKey,
-  hiddenKeys = [],
-  columnLabels,
+  columns,
   onEdit,
   onDelete,
 }: BaseTableProps<T, IdKey>) {
-  const excludedKeys = new Set([idKey, ...hiddenKeys]);
-  
-  const columns = data.length > 0
-    ? (Object.keys(data[0]) as (keyof T)[]).filter((col) => !excludedKeys.has(col))
-    : [];
-
-  const getLabel = (col: keyof T) =>
-    columnLabels?.[col] ?? String(col).charAt(0).toUpperCase() + String(col).slice(1);
-
   return (
     <TableContainer
       component={Paper}
       sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 3}}
     >
-      <Table sx={{ minWidth: 650 }} aria-label="dynamic table" >
+      <Table sx={{ tableLayout: 'fixed', minWidth: 650 }} aria-label="dynamic table" >
         <TableHead>
           <StyledTableRow>
             {columns.map((col) => (
-              <StyledTableCell key={String(col)}>
-                {getLabel(col)}
+              <StyledTableCell 
+                key={String(col)}
+                width={col.width}
+              >
+                {col.label}
               </StyledTableCell>
             ))}
             {(onEdit || onDelete) && (
-              <StyledTableCell align="center">Actions</StyledTableCell>
+              <StyledTableCell width={120} />
             )}
           </StyledTableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, rowIndex) => (
-            <StyledTableRow key={rowIndex}>
-              {columns.map((col, colIndex) => (
+          {data.map((row, i) => (
+            <StyledTableRow key={idKey ? String(row[idKey]) : i}>
+              {columns.map((col) => (
                 <StyledTableCell
-                  key={String(col)}
-                  component={colIndex === 0 ? 'th' : 'td'}
-                  scope={colIndex === 0 ? 'row' : undefined}
+                  key={String(col.key)}
+                  sx={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
                 >
-                  {String(row[col])}
+                  {String(row[col.key] ?? '')}
                 </StyledTableCell>
               ))}
               {(onEdit || onDelete) && (
-                <StyledTableCell key="actions">
+                <StyledTableCell key="actions" align='right'>
                   {onEdit && (
                     <IconButton color="secondary" aria-label="edit" onClick={() => onEdit(row)}>
                       <EditIcon />
