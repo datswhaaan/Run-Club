@@ -5,8 +5,10 @@ import { EditMemberModal } from './EditMemberModal'
 import BaseTable from './BaseTable'
 import type { Member} from '../types/member'
 import type { ColumnConfig } from '../types/column'
+import { useNavigate } from 'react-router'
 
 export function MemberList() {
+  const navigate = useNavigate()
   const { data: members = [], isLoading } = useMembers()
   const { update, remove } = useMemberCacheActions()
   const modal = useEditModal<Member>()
@@ -26,7 +28,7 @@ export function MemberList() {
         data={members}
         idKey="id"
         columns={displayColumns}
-        onEdit={modal.open}
+        onEdit={(member) => navigate(`/members/${member.id}`)}
         onDelete={(id) => remove(id)}
       />
 

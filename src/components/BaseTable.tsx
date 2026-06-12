@@ -72,7 +72,7 @@ export default function BaseTable<T extends Record<string, unknown>, IdKey exten
           {data.length === 0 && emptyRowCount === 0 ? (
             <StyledTableRow>
               <StyledTableCell colSpan={colSpan} align="center" sx={{ color: 'text.secondary' }}>
-                ไม่มีข้อมูล
+                No data
               </StyledTableCell>
             </StyledTableRow>
           ) : (
@@ -109,7 +109,7 @@ export default function BaseTable<T extends Record<string, unknown>, IdKey exten
                 <StyledTableRow key={`empty-${i}`}>
                   {i === 0 && data.length === 0 ? (
                     <StyledTableCell colSpan={colSpan} align="center" sx={{ color: 'text.secondary' }}>
-                      ไม่มีข้อมูล
+                      No Data
                     </StyledTableCell>
                   ) : (
                     <StyledTableCell colSpan={colSpan} />
